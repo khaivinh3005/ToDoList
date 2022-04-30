@@ -1,0 +1,46 @@
+h1 {
+    text-align: center;
+}
+
+.to-do {
+    width: 300px;
+}
+
+.btn-submit {
+    text-align: center;
+}
+
+.task-list-content , .task-to-do {
+    display: flex;
+}
+
+.card-header {
+    background-color: #0000ff;
+    font-weight: 700;
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+
+.card-header-task {
+    background-color: #00ffff;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card-important {
+    background-color: #ff0000;
+}
+
+.card-medium {
+    background-color: #ffff00;
+}
+
+.card-normal {
+    background-color: #228B22;
+}
+
+.task-to-do {
+    justify-content: space-between;
+}
