@@ -44,3 +44,7 @@ h1 {
 .task-to-do {
     justify-content: space-between;
 }
+
+.text-danger {
+    color: red;
+}

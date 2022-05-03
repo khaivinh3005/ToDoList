@@ -1,13 +1,15 @@
-import React from "react";
+import React , {useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faEdit , faTimes } from '@fortawesome/free-solid-svg-icons'
 import TaskToDoItem from "./TaskToDoItem";
 
 export default function TaskList() {
+  
   return (
     <div className="container">
       <h1 className="mt-5">Task List</h1>
       <div className="task-list-content border border-primary">
+          
         {/* To-Do */}
         <div className="to-do mx-2">
             <div className="card">
@@ -16,7 +18,7 @@ export default function TaskList() {
                     <h5 className="card-title">To Do</h5>
                     </div>
                     <div className="content">
-                       <TaskToDoItem />
+                       <TaskToDoItem isUndoTodo={false}/>
                     </div>
                 </div>
             </div>
@@ -31,7 +33,7 @@ export default function TaskList() {
             </div>
 
             <div className="content">
-                <TaskToDoItem />
+                <TaskToDoItem isUndoTodo={true} />
             </div>
           </div>
         </div>

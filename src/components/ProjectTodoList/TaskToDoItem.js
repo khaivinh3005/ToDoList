@@ -2,12 +2,13 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee , faEdit , faTimes } from '@fortawesome/free-solid-svg-icons'
 
-export default function TaskToDoItem() {
+export default function TaskToDoItem(props) {
+    const {isUndoTodo} = props;
   return (
         <div className="card text-white bg-primary m-2" style={{ maxWidth: "18rem" }}>
              <div className="card-header card-header-task text-right">
                  <div>
-                     <FontAwesomeIcon className="mr-2" style={{color:"black"}} icon={faEdit} />
+                     <FontAwesomeIcon className="mr-2" style={{color:"black" , display: isUndoTodo ? "none" : ''}} icon={faEdit} />
                      <FontAwesomeIcon className="mr-2" style={{color:"red"}} icon={faTimes} size="lg" />
                 </div>
             </div>
@@ -21,7 +22,9 @@ export default function TaskToDoItem() {
                     Score: <span>1</span>
                 </div>
             </div>
-            <div type="" className="btn btn-primary d-block">Done</div>
+            {
+                isUndoTodo ? <div type="" className="btn btn-primary d-block">Undo to To do</div> : <div type="" className="btn btn-primary d-block">Done</div>
+            }
             </div>
         </div>
   )
