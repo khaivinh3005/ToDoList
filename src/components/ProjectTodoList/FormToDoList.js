@@ -12,7 +12,7 @@ export default function FormToDoList(props) {
   });
   
 
-
+  console.log('option-1')
   const validatorUserInfo = (name, value) => {
     switch (name) {
       case 'taskName':
