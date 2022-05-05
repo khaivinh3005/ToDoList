@@ -11,15 +11,26 @@ export default function TodoList() {
     score: null
   }
   const [userInfo, setUserInfo] = useState(defaultInfo);
+  const [taskListTodo, setTaskListTodo] = useState([])
+  const [taskListDone, setTaskListDone] = useState([{id:"1",taskName:"Task name1" ,priority:"card-medium",score:"2"}])
 
   return (
     <div className="conatainer">
       <h1>Task Form</h1>
       <FormToDoList
-        userInfo= {userInfo}
-        setUserInfo= {setUserInfo} 
+        userInfo = {userInfo}
+        setUserInfo = {setUserInfo}
+        taskListTodo = {taskListTodo}
+        setTaskListTodo = {setTaskListTodo} 
        />
-      <TaskList />
+      <TaskList
+        userInfo = {userInfo}
+        setUserInfo = {setUserInfo}
+        taskListTodo = {taskListTodo}
+        taskListDone = {taskListDone}
+        setTaskListTodo = {setTaskListTodo} 
+        setTaskListDone = {setTaskListDone}
+       />
     </div>
   );
 }

@@ -1,69 +1,53 @@
-import React , {useState} from "react";
+import React , {useState , useEffect} from "react";
 
 
 export default function FormToDoList(props) {
-  const {userInfo, setUserInfo} = props;
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState({
-    taskName: '',
-    score: null,
-    priority: '',
-    isError: false
-  });
-  
+  const {userInfo, setUserInfo , taskListTodo, setTaskListTodo} = props;
+  const [formErrors, setFormErrors] = useState({});
 
-  console.log('option-1')
-  const validatorUserInfo = (name, value) => {
-    switch (name) {
-      case 'taskName':
-          if (!value || value.trim() === "") {
-            setIsSubmitted(false)
-            return `Task Name is Required`;
-          } else {
-            setIsSubmitted(true)
-            return "";
-          }
-
-      case 'score':
-        if (!value) {
-          setIsSubmitted(false)
-          return `Score is Required`;
-        } 
-        else if (value < 1 || value > 10 || !value.toString().match(/^[0-9]+(\.?[0-9]+)?$/) || !value.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) {
-          setIsSubmitted(false)
-          return `Score is > 0 and < 10`
-        } else {
-          setIsSubmitted(true)
-          return "";
-        }
-
-      case 'priority':
-        if (!value) {
-          setIsSubmitted(false)
-          return `priority is Required`;
-          } else {
-            setIsSubmitted(true)
-            return "";
-          }
-
-      default: {
-          return "";
-        }
-    }
-  }
+  console.log('userInfo : ',userInfo)
 
   const handleChangeinput = (e) => {
     const {value,name} = e.target;
     let index = new Date().toLocaleString();
-    validatorUserInfo(name,value)
-    setErrors({...errors, [name] : validatorUserInfo(name,value) , ['id']: index})
     setUserInfo({...userInfo , [name] : value , ['id']: index})
   }
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setFormErrors(validate(userInfo));
+    if(userInfo.taskName !== '' && userInfo.score !== '' && userInfo.priority !=='' && formErrors) {
+      setTaskListTodo([...taskListTodo,userInfo]);
+    }
     
+    setUserInfo({
+      id: '',
+      taskName: '',
+      priority: '',
+      score: ''
+    })
+
+  }
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.taskName) {
+      errors.taskName = "TaskName is required !";
+    } 
+
+    if (!values.score) {
+      errors.score = "Score is required !";
+    } else if(values.score < 1 || values.score > 10 || !values.score.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) {
+      errors.score = `Score is > 0 and < 10`
+    }
+
+    if(!values.priority) {
+      errors.priority = "Priority is required !";
+    }
+
+    return errors;
   }
 
 
@@ -74,25 +58,25 @@ export default function FormToDoList(props) {
           
         <div className="form-group">
           <label htmlFor="formGroupExampleInput">Task Name</label>
-          <input type="text" className="form-control" placeholder="Example input" name="taskName" id="taskName" onChange={(e) => handleChangeinput(e)} value={userInfo.taskName}/>
-          <div><span className="text-danger">{errors.taskName}</span></div>
+          <input type="text" className="form-control" placeholder="Example input" name="taskName" id="taskName" onChange={handleChangeinput} value={userInfo.taskName}/>
+          <div><span className="text-danger">{formErrors.taskName}</span></div>
         </div>
 
         <div className="form-group">
           <label htmlFor="formGroupExampleInput2">score</label>
-          <input type="text" className="form-control" placeholder="Another input" name="score" id="score" onChange={(e) => handleChangeinput(e)} value={userInfo.score} />
-          <div><span className="text-danger">{errors.score}</span></div>
+          <input type="text" className="form-control" placeholder="Another input" name="score" id="score" onChange={handleChangeinput} value={userInfo.score} />
+          <div><span className="text-danger">{formErrors.score}</span></div>
         </div>
 
         <div className="form-group">
           <label for="inputState">priority</label>
-          <select  defaultValue="" name="priority" id="priority" class="form-control" onChange={(e) => handleChangeinput(e)} value={userInfo.priority}>
+          <select  name="priority" id="priority" class="form-control" onChange={handleChangeinput} value={userInfo.priority}>
             <option value={''} selected>Choose --priority--</option>
-            <option value={`important`}>important</option>
-            <option value={`medium`}>medium</option>
-            <option value={`normal`}>normal</option>
+            <option value={`card-important`}>important</option>
+            <option value={`card-medium`}>medium</option>
+            <option value={`card-normal`}>normal</option>
           </select>
-          <div><span className="text-danger">{errors.priority}</span></div>
+          <div><span className="text-danger">{formErrors.priority}</span></div>
         </div>
         <div className="text-center">
             <button type="submit" className="btn btn-primary text-center">Add new task</button>
