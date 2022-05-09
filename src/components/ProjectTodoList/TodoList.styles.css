@@ -48,3 +48,15 @@ h1 {
 .text-danger {
     color: red;
 }
+
+.task-to-do {
+    font-size: 12px;
+}
+.taskTodo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.priority , .score {
+    color: orange;
+}

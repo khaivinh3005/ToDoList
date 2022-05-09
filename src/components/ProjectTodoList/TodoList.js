@@ -8,10 +8,14 @@ export default function TodoList() {
     id: null,
     taskName: '',
     priority: '',
+    planStart: '',
+    planFinish: '',
+    status: '',
     score: null
   }
   const [userInfo, setUserInfo] = useState(defaultInfo);
-  const [taskListTodo, setTaskListTodo] = useState([])
+  const [taskListTodo, setTaskListTodo] = useState([]);
+  console.log('taskListTodo : ',taskListTodo)
   const [taskListDone, setTaskListDone] = useState([{id:"1",taskName:"Task name1" ,priority:"card-medium",score:"2"}])
 
   return (

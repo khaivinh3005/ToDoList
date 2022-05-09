@@ -3,11 +3,13 @@ import React , {useState , useEffect} from "react";
 
 export default function FormToDoList(props) {
   const {userInfo, setUserInfo , taskListTodo, setTaskListTodo} = props;
+  console.log('taskListTodo : ',taskListTodo)
   const [formErrors, setFormErrors] = useState({});
 
   console.log('userInfo : ',userInfo)
 
   const handleChangeinput = (e) => {
+    console.log(e);
     const {value,name} = e.target;
     let index = new Date().toLocaleString();
     setUserInfo({...userInfo , [name] : value , ['id']: index})
@@ -17,20 +19,19 @@ export default function FormToDoList(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setFormErrors(validate(userInfo));
-    if(userInfo.taskName !== '' && userInfo.score !== '' && userInfo.priority !=='' && formErrors) {
+    if(userInfo.taskName !== '' && userInfo.planStart !== '' && userInfo.planFinish !== '' && userInfo.status !=='' && formErrors) {
       setTaskListTodo([...taskListTodo,userInfo]);
-    }
-    
-    setUserInfo({
-      id: '',
-      taskName: '',
-      priority: '',
-      score: ''
-    })
-
+      setUserInfo({
+        taskName: '',
+        planStart: '',
+        planFinish: '',
+        status: ''
+      })
+    } 
   }
 
   const validate = (values) => {
+    console.log('values : ',values)
     const errors = {};
 
     if (!values.taskName) {
@@ -43,8 +44,15 @@ export default function FormToDoList(props) {
       errors.score = `Score is > 0 and < 10`
     }
 
-    if(!values.priority) {
-      errors.priority = "Priority is required !";
+    if (!values.planStart) {
+      errors.planStart = "plan Start is required !";
+    } 
+
+    if (!values.plantFinish) {
+      errors.planFinish = "date Finish is required !";
+    } 
+    if(!values.status) {
+      errors.status = "status is required !";
     }
 
     return errors;
@@ -55,31 +63,51 @@ export default function FormToDoList(props) {
   return (
     <div className="container">
       <form onSubmit={handleSubmit}>
-          
-        <div className="form-group">
-          <label htmlFor="formGroupExampleInput">Task Name</label>
-          <input type="text" className="form-control" placeholder="Example input" name="taskName" id="taskName" onChange={handleChangeinput} value={userInfo.taskName}/>
-          <div><span className="text-danger">{formErrors.taskName}</span></div>
-        </div>
+      <div className="container">
+            <form>
 
-        <div className="form-group">
-          <label htmlFor="formGroupExampleInput2">score</label>
-          <input type="text" className="form-control" placeholder="Another input" name="score" id="score" onChange={handleChangeinput} value={userInfo.score} />
-          <div><span className="text-danger">{formErrors.score}</span></div>
-        </div>
+                <div className="form-group row">
+                    <label htmlFor="inputTaskName" className="col-sm-2 col-form-label">Task name</label>
+                    <div className="col-sm-10">
+                        <input type="Text" onChange={handleChangeinput} className="form-control" name="taskName" id="taskName" value={userInfo.taskName}
+                    />
+                    </div>
+                    <div><span className="text-danger text-center">{formErrors.taskName}</span></div>
+                </div>
 
-        <div className="form-group">
-          <label for="inputState">priority</label>
-          <select  name="priority" id="priority" class="form-control" onChange={handleChangeinput} value={userInfo.priority}>
-            <option value={''} selected>Choose --priority--</option>
-            <option value={`card-important`}>important</option>
-            <option value={`card-medium`}>medium</option>
-            <option value={`card-normal`}>normal</option>
-          </select>
-          <div><span className="text-danger">{formErrors.priority}</span></div>
-        </div>
-        <div className="text-center">
-            <button type="submit" className="btn btn-primary text-center">Add new task</button>
+                <div className="form-group row">
+                    <label htmlFor="inputPlanStart" className="col-sm-2 col-form-label">Plan Start</label>
+                    <div className="col-sm-10">
+                        <input value={userInfo.planStart} type="Date" onChange={handleChangeinput} className="form-control" name="planStart" id="planStart"
+                        />
+                    </div>
+                    <div><span className="text-danger text-center">{formErrors.planStart}</span></div>
+                </div>
+
+                <div className="form-group row">
+                    <label htmlFor="inputPlanFinish" className="col-sm-2 col-form-label">Plan Finish</label>
+                    <div className="col-sm-10">
+                        <input value={userInfo.planFinish} type="Date" onChange={handleChangeinput} className="form-control" name="planFinish" id="planFinish"
+                        />
+                    </div>
+                    <div><span className="text-danger">{formErrors.planFinish}</span></div>
+                </div>
+
+                <div className="form-group row">
+                    <label htmlFor="inputStatus" className="col-sm-2 col-form-label">Status</label>
+                    <div className="col-sm-10">
+                        <select value={userInfo.status}  name="status" id="status"  onChange={handleChangeinput}  className="form-control">
+                            <option value={''} selected>Choose --status--</option>
+                            <option value={`card-assigned`}>Assigned</option>
+                            <option value={`card-inprocess`}>In-Process</option>
+
+                        </select>
+                    </div>
+
+                    <div><span className="text-danger text-center">{formErrors.status}</span></div>
+                </div>
+            </form>
+            <button className="btn bg-success text-white ml-5">Add New Task</button>
         </div>
       </form>        
     </div>

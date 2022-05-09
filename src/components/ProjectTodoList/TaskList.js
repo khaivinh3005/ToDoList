@@ -16,14 +16,29 @@ export default function TaskList(props) {
         <div className="to-do mx-2">
             <div className="card">
                 <div className="card border-primary mb-3 " style={{ maxWidth: "20rem" }}>
-                    <div className="card-header text-center text-white py-1">
-                    <h5 className="card-title">To Do</h5>
+                    <div className="card-header bg-success text-center text-white py-1">
+                    <div className="d-flex taskTodo">
+                      <div>
+                        <h5 className="card-title">Assigned Task </h5>
+                      </div>
+                      <div>
+                      {taskListTodo.map((taskItem,index) => {
+                        if(taskItem.status === 'card-assigned') {
+                          return (
+                            <p>{taskListTodo.length}</p>
+                          )
+                        } 
+                      })}
+                      </div>
+                    </div>
                     </div>
                     <div className="content">
                       {taskListTodo.map((taskItem,index) => {
-                        return (
-                          <TaskToDoItem userInfo={userInfo} setUserInfo={setUserInfo}  taskListDone={taskListDone} setTaskListDone={setTaskListDone} taskListTodo={taskListTodo} setTaskListTodo={setTaskListTodo} taskItem={taskItem} key={index} isUndoTodo={false} />
-                        )
+                        if(taskItem.status === 'card-assigned') {
+                          return (
+                            <TaskToDoItem userInfo={userInfo} setUserInfo={setUserInfo}  taskListDone={taskListDone} setTaskListDone={setTaskListDone} taskListTodo={taskListTodo} setTaskListTodo={setTaskListTodo} taskItem={taskItem} key={index} isUndoTodo={false} />
+                          )
+                        } 
                       })}
                     </div>
                 </div>
@@ -34,15 +49,30 @@ export default function TaskList(props) {
         {/* Done */}
         <div className="to-do mx-2">
           <div className="card border-primary mb-3 mt-1" style={{ maxWidth: "20rem" }}>
-            <div className="card-header text-center text-white py-1">
-              <h5 className="card-title">Done</h5>
+            <div className="card-header bg-info text-center text-white py-1">
+            <div className="d-flex taskTodo">
+                      <div>
+                        <h5 className="card-title">Process Task </h5>
+                      </div>
+                      <div>
+                      {taskListTodo.map((taskItem,index) => {
+                        if(taskItem.status === 'card-inprocess') {
+                          return (
+                            <p>{taskListTodo.length}</p>
+                          )
+                        } 
+                      })}
+                      </div>
+                    </div>
             </div>
 
             <div className="content">
-                {taskListDone.map((taskItem,index) => {
-                  return (
-                          <TaskDoneItem taskListDone={taskListDone} setTaskListDone={setTaskListDone} taskListTodo={taskListTodo} setTaskListTodo={setTaskListTodo} taskItem={taskItem} key={index} isUndoTodo={true} />
-                         )
+                {taskListTodo.map((taskItem,index) => {
+                  if(taskItem.status === 'card-inprocess') {
+                    return (
+                      <TaskDoneItem taskListDone={taskListDone} setTaskListDone={setTaskListDone} taskListTodo={taskListTodo} setTaskListTodo={setTaskListTodo} taskItem={taskItem} key={index} isUndoTodo={true} />
+                     )
+                  }
                 })}
             </div>
           </div>
